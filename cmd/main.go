@@ -6,6 +6,7 @@ import (
 	"final-project-1/internal/repository"
 	"final-project-1/internal/service"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -22,12 +23,12 @@ func main() {
 	r := gin.Default()
 
 	// Initialize database connection
-	// dbHost := os.Getenv("DB_HOST")
-	// dbPort := os.Getenv("DB_PORT")
-	// dbUser := os.Getenv("DB_USER")
-	// dbPassword := os.Getenv("DB_PASSWORD")
-	// dbName := os.Getenv("DB_NAME")
-	// dbDialect := os.Getenv("DB_DIALECT")
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+	dbDialect := os.Getenv("DB_DIALECT")
 
 	// DB_HOST=localhost
 	// DB_PORT=5432
@@ -36,12 +37,12 @@ func main() {
 	// DB_NAME=todolist
 	// DB_DIALECT=postgres
 
-	dbHost := "localhost"
-	dbPort := "5432"
-	dbUser := "postgres"
-	dbPassword := "root"
-	dbName := "todolist"
-	dbDialect := "postgres"
+	// dbHost := "localhost"
+	// dbPort := "5432"
+	// dbUser := "postgres"
+	// dbPassword := "root"
+	// dbName := "todolist"
+	// dbDialect := "postgres"
 
 	db, err := repository.InitDB(dbHost, dbPort, dbUser, dbPassword, dbName, dbDialect)
 	if err != nil {
