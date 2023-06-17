@@ -48,7 +48,7 @@ func StartApp() {
 	docs.SwaggerInfo.Title = "Todo Application"
 	docs.SwaggerInfo.Description = "Todo Application API"
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "localhost:8080"
+	docs.SwaggerInfo.Host = "https://final-project-1-production.up.railway.app/"
 	docs.SwaggerInfo.Schemes = []string{"https", "http"}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
