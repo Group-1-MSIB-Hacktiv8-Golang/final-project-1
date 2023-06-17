@@ -1,8 +1,7 @@
-package main
+package handler
 
 import (
 	"final-project-1/internal/app"
-	"final-project-1/internal/handler"
 	"final-project-1/internal/repository"
 	"final-project-1/internal/service"
 	"log"
@@ -10,9 +9,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/swag/example/basic/docs"
 )
 
-func main() {
+func StartApp() {
 	// Load environment variables from .env file
 	err := godotenv.Load()
 	if err != nil {
@@ -30,20 +33,6 @@ func main() {
 	dbName := os.Getenv("DB_NAME")
 	dbDialect := os.Getenv("DB_DIALECT")
 
-	// DB_HOST=localhost
-	// DB_PORT=5432
-	// DB_USER=postgres
-	// DB_PASSWORD=root
-	// DB_NAME=todolist
-	// DB_DIALECT=postgres
-
-	// dbHost := "localhost"
-	// dbPort := "5432"
-	// dbUser := "postgres"
-	// dbPassword := "root"
-	// dbName := "todolist"
-	// dbDialect := "postgres"
-
 	db, err := repository.InitDB(dbHost, dbPort, dbUser, dbPassword, dbName, dbDialect)
 	if err != nil {
 		log.Fatal("Error connecting to database")
@@ -56,8 +45,16 @@ func main() {
 	// Initialize application
 	app := app.NewApp(todoService)
 
+	docs.SwaggerInfo.Title = "Belajar DDD"
+	docs.SwaggerInfo.Description = "Ini adalah API dengan pattern DDD"
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "localhost:8000"
+	docs.SwaggerInfo.Schemes = []string{"https", "http"}
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
 	// Initialize API endpoints
-	todoHandler := handler.NewTodoHandler(app)
+	todoHandler := NewTodoHandler(app)
 	r.GET("/todos", todoHandler.GetTodos)
 	r.GET("/todos/:id", todoHandler.GetTodoByID)
 	r.POST("/todos", todoHandler.CreateTodo)
