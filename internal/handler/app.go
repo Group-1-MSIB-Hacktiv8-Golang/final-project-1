@@ -45,10 +45,10 @@ func StartApp() {
 	// Initialize application
 	app := app.NewApp(todoService)
 
-	docs.SwaggerInfo.Title = "Belajar DDD"
-	docs.SwaggerInfo.Description = "Ini adalah API dengan pattern DDD"
+	docs.SwaggerInfo.Title = "Todo Application"
+	docs.SwaggerInfo.Description = "Todo Application API"
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "localhost:8000"
+	docs.SwaggerInfo.Host = "localhost:8080"
 	docs.SwaggerInfo.Schemes = []string{"https", "http"}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
